@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-export default class Word extends PureComponent {
+import {connect} from 'react-redux';
+
+class Word extends PureComponent {
   itemFlatList = (item, index) => {
     const {filterMode} = this.props;
     // Cac truong hop phai return giao dien
@@ -30,7 +32,9 @@ export default class Word extends PureComponent {
           </View>
           <View style={styles.textgroup}>
             <TouchableOpacity
-              onPress={() => this.props.onToggleMemorized(item)}
+              onPress={() =>
+                this.props.dispatch({type: 'TOGGLE_MEMORIZED', item})
+              }
               style={
                 item.isMemorized
                   ? styles.buttonisForgot
@@ -41,7 +45,7 @@ export default class Word extends PureComponent {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.onRemoveWord(item)}
+              onPress={() => this.props.dispatch({type: 'ON_REMOVED', item})}
               style={styles.buttonRemove}>
               <Text style={styles.textRemove}>Remove</Text>
             </TouchableOpacity>
@@ -118,3 +122,9 @@ const styles = StyleSheet.create({
     height: 5,
   },
 });
+
+const mapStateToProps = function(state) {
+  return {words: state.words, filterMode: state.filterMode};
+};
+
+export default connect(mapStateToProps)(Word);

@@ -5,7 +5,9 @@ import Form from './Form';
 import Filter from './Filter';
 import Word from './Word';
 
-export default class List extends Component {
+import {connect} from 'react-redux';
+
+class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +18,6 @@ export default class List extends Component {
         {id: 4, en: 'Four', vn: 'Bon', isMemorized: false},
         {id: 5, en: 'Five', vn: 'Nam', isMemorized: true},
       ],
-      shouldshowform: false,
       filterMode: 'Show_All',
     };
   }
@@ -70,18 +71,9 @@ export default class List extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Form
-          shouldshowform={this.state.shouldshowform}
-          onToggleForm={this.onToggleForm}
-          onAddWord={this.onAddWord}
-        />
-        <Filter onSetFilterMode={this.onSetFilterMode} />
-        <Word
-          words={this.state.words}
-          filterMode={this.state.filterMode}
-          onRemoveWord={this.onRemoveWord}
-          onToggleMemorized={this.onToggleMemorized}
-        />
+        <Form />
+        <Filter />
+        <Word />
       </View>
     );
   }
@@ -93,3 +85,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
 });
+
+export default connect()(List);

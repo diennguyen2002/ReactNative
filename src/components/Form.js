@@ -7,20 +7,25 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-export default class Form extends PureComponent {
+import {connect} from 'react-redux';
+
+class Form extends PureComponent {
   state = {
     en: '',
     vn: '',
   };
+  toggleForm = () => {
+    this.props.dispatch({type: 'TOGGLE_FORM'});
+  };
   addWord = () => {
     const {en, vn} = this.state;
-    this.props.onAddWord(en, vn);
+    this.props.dispatch({type: 'ADD_WORD', en, vn});
     this.setState({en: '', vn: ''});
     this.inputEn.clear();
     this.inputVn.clear();
   };
-  renderForm = shouldshowform => {
-    if (shouldshowform) {
+  renderForm = () => {
+    if (this.props.shouldshowform) {
       return (
         <View>
           <View style={styles.containerTextInput}>
@@ -44,7 +49,7 @@ export default class Form extends PureComponent {
               <Text style={styles.textTouchable}>Add word</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.onToggleForm()}
+              onPress={() => this.toggleForm()}
               style={styles.touchableCancel}>
               <Text style={styles.textTouchable}>Cancel</Text>
             </TouchableOpacity>
@@ -55,7 +60,7 @@ export default class Form extends PureComponent {
       return (
         <TouchableOpacity
           style={styles.buttonOpenForm}
-          onPress={() => this.props.onToggleForm()}>
+          onPress={() => this.toggleForm()}>
           <Text style={styles.textOpenForm}>+</Text>
         </TouchableOpacity>
       );
@@ -64,7 +69,7 @@ export default class Form extends PureComponent {
 
   render() {
     console.log('render form');
-    return this.renderForm(this.props.shouldshowform);
+    return this.renderForm();
   }
 }
 const styles = StyleSheet.create({
@@ -113,3 +118,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+const mapStateToProps = function(state) {
+  return {shouldshowform: state.shouldshowform};
+};
+
+export default connect(mapStateToProps)(Form);

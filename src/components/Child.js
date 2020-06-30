@@ -7,18 +7,29 @@ import {
   Dimensions,
 } from 'react-native';
 
-export default class Child extends Component {
+import {connect} from 'react-redux';
+
+class Child extends Component {
   render() {
-    //console.log('child');
+    const {dispatch} = this.props;
     return (
       <View style={styles.groupBtn}>
-        <TouchableOpacity onPress={this.props.onIncrease}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch({type: 'INCREASE'});
+          }}>
           <Text style={styles.increase}> Increase </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.onDecrease}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch({type: 'DESCREASE'});
+          }}>
           <Text style={styles.decrease}> Decrease </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.onReset}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch({type: 'RESET', reset: 0});
+          }}>
           <Text style={styles.reset}> Reset </Text>
         </TouchableOpacity>
       </View>
@@ -49,3 +60,5 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 });
+
+export default connect()(Child);

@@ -2,31 +2,14 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet, Dimensions} from 'react-native';
 import Child from './Child';
 
-export default class Box extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {count: 0};
-  }
-  onIncrease = () => {
-    this.setState({count: this.state.count + 1});
-  };
-  onDecrease = () => {
-    this.setState({count: this.state.count - 1});
-  };
-  onReset = () => {
-    this.setState({count: 0});
-  };
+import {connect} from 'react-redux'
+
+class Box extends Component {
   render() {
-    //console.log('Box');
     return (
       <View style={styles.container}>
-        <Text style={styles.count}> Count: {this.state.count} </Text>
-        <Child
-          //valueCount={this.state.count}
-          onIncrease={this.onIncrease}
-          onDecrease={this.onDecrease}
-          onReset={this.onReset}
-        />
+        <Text style={styles.count}> Count: {this.props.count} </Text>
+        <Child />
       </View>
     );
   }
@@ -45,3 +28,9 @@ const styles = StyleSheet.create({
     fontFamily: 'DancingScript-Regular',
   },
 });
+
+const mapStateToProps = function(state) {
+  return {count: state}
+}
+
+export default connect(mapStateToProps)(Box)
