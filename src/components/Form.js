@@ -19,6 +19,10 @@ class Form extends PureComponent {
   };
   addWord = () => {
     const {en, vn} = this.state;
+    if (!en || !vn) {
+      alert('Ban chua truyen du thong tin');
+      return;
+    }
     this.props.dispatch({type: 'ADD_WORD', en, vn});
     this.setState({en: '', vn: ''});
     this.inputEn.clear();

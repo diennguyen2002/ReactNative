@@ -33,7 +33,7 @@ class Word extends PureComponent {
           <View style={styles.textgroup}>
             <TouchableOpacity
               onPress={() =>
-                this.props.dispatch({type: 'TOGGLE_MEMORIZED', item})
+                this.props.dispatch({type: 'TOGGLE_MEMORIZED', id: item.id})
               }
               style={
                 item.isMemorized
@@ -45,7 +45,9 @@ class Word extends PureComponent {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.dispatch({type: 'ON_REMOVED', item})}
+              onPress={() =>
+                this.props.dispatch({type: 'ON_REMOVED', id: item.id})
+              }
               style={styles.buttonRemove}>
               <Text style={styles.textRemove}>Remove</Text>
             </TouchableOpacity>

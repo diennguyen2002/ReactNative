@@ -26,10 +26,6 @@ const store = createStore((state = defaultState, action) => {
   }
   if (action.type === 'ADD_WORD') {
     const newWords = [...state.words];
-    if (!action.en || !action.vn) {
-      alert('Ban chua truyen du thong tin');
-      return;
-    }
     const newWord = {
       id: state.words.length + 1,
       en: action.en,
@@ -44,8 +40,8 @@ const store = createStore((state = defaultState, action) => {
   }
   if (action.type === 'TOGGLE_MEMORIZED') {
     const newWords = state.words.map(word => {
-      if (word.id === action.item.id) {
-        const newWord = {...action.item, isMemorized: !action.item.isMemorized};
+      if (word.id === action.id) {
+        const newWord = {...word, isMemorized: !word.isMemorized};
         return newWord;
       }
       return word;
@@ -54,7 +50,7 @@ const store = createStore((state = defaultState, action) => {
   }
   if (action.type === 'ON_REMOVED') {
     const newWords = state.words.filter(word => {
-      if (word.id === action.item.id) {
+      if (word.id === action.id) {
         return false;
       }
       return true;

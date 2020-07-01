@@ -37,8 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = function(state){
-  return {filterMode: state.filterMode}
-}
-
-export default connect(mapStateToProps)(Filter)
+export default connect()(Filter)
