@@ -46,7 +46,7 @@ class Word extends PureComponent {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
-                this.props.dispatch({type: 'ON_REMOVED', id: item.id})
+                this.props.dispatch({type: 'REMOVE_WORD', id: item.id})
               }
               style={styles.buttonRemove}>
               <Text style={styles.textRemove}>Remove</Text>
