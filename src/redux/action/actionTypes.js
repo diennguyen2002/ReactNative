@@ -1,0 +1,19 @@
+//word
+const TOGGLE_MEMORIZED = 'TOGGLE_MEMORIZED';
+const REMOVE_WORD = 'REMOVE_WORD';
+//form
+const TOGGLE_FORM = 'TOGGLE_FORM';
+const ADD_WORD = 'ADD_WORD';
+//filter
+const SELECT_FILTER = 'SELECT_FILTER';
+//Store
+const FETCH_DATA_WORDS = 'FETCH_DATA_WORDS';
+
+export const actionTypes = {
+  TOGGLE_MEMORIZED,
+  REMOVE_WORD,
+  TOGGLE_FORM,
+  ADD_WORD,
+  SELECT_FILTER,
+  FETCH_DATA_WORDS,
+};

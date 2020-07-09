@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
+import {actionCreators} from '../redux/action/actionCreators';
 
 class Form extends PureComponent {
   state = {
@@ -15,7 +16,7 @@ class Form extends PureComponent {
     vn: '',
   };
   toggleForm = () => {
-    this.props.dispatch({type: 'TOGGLE_FORM'});
+    this.props.toggleForm();
   };
   addWord = () => {
     const {en, vn} = this.state;
@@ -23,7 +24,7 @@ class Form extends PureComponent {
       alert('Ban chua truyen du thong tin');
       return;
     }
-    this.props.dispatch({type: 'ADD_WORD', en, vn});
+    this.props.addWord(en, vn);
     this.setState({en: '', vn: ''});
     this.inputEn.clear();
     this.inputVn.clear();
@@ -127,4 +128,7 @@ const mapStateToProps = function(state) {
   return {shouldshowform: state.shouldshowform};
 };
 
-export default connect(mapStateToProps)(Form);
+export default connect(
+  mapStateToProps,
+  actionCreators,
+)(Form);

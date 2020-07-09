@@ -9,8 +9,12 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
+import {actionCreators} from '../redux/action/actionCreators';
 
 class Word extends PureComponent {
+  componentDidMount(){
+    this.props.fetchDataWords();
+  }
   itemFlatList = (item, index) => {
     const {filterMode} = this.props;
     // Cac truong hop phai return giao dien
@@ -33,7 +37,7 @@ class Word extends PureComponent {
           <View style={styles.textgroup}>
             <TouchableOpacity
               onPress={() =>
-                this.props.dispatch({type: 'TOGGLE_MEMORIZED', id: item.id})
+                this.props.toggleMemorized(item._id, item.isMemorized)
               }
               style={
                 item.isMemorized
@@ -45,9 +49,7 @@ class Word extends PureComponent {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() =>
-                this.props.dispatch({type: 'REMOVE_WORD', id: item.id})
-              }
+              onPress={() => this.props.removeWord(item._id)}
               style={styles.buttonRemove}>
               <Text style={styles.textRemove}>Remove</Text>
             </TouchableOpacity>
@@ -63,7 +65,7 @@ class Word extends PureComponent {
       <FlatList
         showsVerticalScrollIndicator={false}
         extraData={this.props.words}
-        keyExtractor={(item, index) => item.id.toString()}
+        keyExtractor={(item, index) => item._id.toString()}
         data={this.props.words}
         renderItem={({item, index}) => this.itemFlatList(item, index)}
         ItemSeparatorComponent={() => {
@@ -125,8 +127,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function (state) {
   return {words: state.words, filterMode: state.filterMode};
 };
 
-export default connect(mapStateToProps)(Word);
+export default connect(mapStateToProps, actionCreators)(Word);

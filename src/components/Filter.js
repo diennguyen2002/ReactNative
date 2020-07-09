@@ -2,7 +2,8 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, View} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import { actionCreators } from '../redux/action/actionCreators';
 
 class Filter extends PureComponent {
   renderFilter = () => {
@@ -10,7 +11,7 @@ class Filter extends PureComponent {
       <View style={styles.containerPickerStyle}>
         <RNPickerSelect
           onValueChange={value => {
-            this.props.dispatch({type:'SELECT_FILTER', mode: value});
+            this.props.selectFilter(value);
           }}
           items={[
             {label: 'Show All', value: 'Show_All'},
@@ -37,4 +38,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect()(Filter)
+export default connect(null, actionCreators)(Filter);
+
