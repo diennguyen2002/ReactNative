@@ -6,14 +6,21 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 import {connect} from 'react-redux';
 import {actionCreators} from '../redux/action/actionCreators';
 
 class Word extends PureComponent {
-  componentDidMount(){
-    this.props.fetchDataWords();
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+    };
+  }
+  componentDidMount() {
+    this.props.fetchDataWords((status) => this.setState({isLoading: status}))
   }
   itemFlatList = (item, index) => {
     const {filterMode} = this.props;
@@ -60,18 +67,24 @@ class Word extends PureComponent {
   };
 
   render() {
-    console.log('render word');
     return (
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        extraData={this.props.words}
-        keyExtractor={(item, index) => item._id.toString()}
-        data={this.props.words}
-        renderItem={({item, index}) => this.itemFlatList(item, index)}
-        ItemSeparatorComponent={() => {
-          return <View style={styles.separator} />;
-        }}
-      />
+        <View>
+          <ActivityIndicator
+          animating={this.state.isLoading}
+          size="large"
+        />
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          extraData={this.props.words}
+          keyExtractor={(item, index) => item._id.toString()}
+          data={this.props.words}
+          renderItem={({item, index}) => this.itemFlatList(item, index)}
+          ItemSeparatorComponent={() => {
+            return <View style={styles.separator} />;
+          }}
+        />
+        </View>
+        
     );
   }
 }

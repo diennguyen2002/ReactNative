@@ -1,14 +1,10 @@
 import {actionTypes} from './actionTypes';
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-  baseURL: 'https://servernode180520.herokuapp.com',
-});
+import API from './api';
 
 // word
 function toggleMemorized(_id, _isMemorized) {
   return (dispatch) => {
-    axiosInstance
+    API
       .put(`/word/${_id}`, {isMemorized: !_isMemorized})
       .then((response) => {
         const {success, word} = response.data;
@@ -22,7 +18,7 @@ function toggleMemorized(_id, _isMemorized) {
 
 function removeWord(_id) {
   return (dispatch) => {
-    axiosInstance
+    API
       .delete(`/word/${_id}`)
       .then((response) => {
         const {success, word} = response.data;
@@ -43,7 +39,7 @@ function toggleForm() {
 
 function addWord(en, vn) {
   return (dispatch) => {
-    axiosInstance
+    API
       .post('/word', {en, vn})
       .then((response) => {
         const {success, word} = response.data;
@@ -64,15 +60,16 @@ function selectFilter(mode) {
 }
 
 //store
-function fetchDataWords() {
+function fetchDataWords(cb) {
   return (dispatch) => {
-    axiosInstance
+    API
       .get('/word')
       .then((reponse) => {
         const data = reponse.data;
         const {success, words} = data;
         if (success && words) {
           dispatch({type: actionTypes.FETCH_DATA_WORDS, words});
+          cb(false);
         }
       })
       .catch((error) => console.log(error.message));
